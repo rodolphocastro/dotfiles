@@ -35,11 +35,18 @@ Write-Host "Replacing Powershell Profile"
 Add-Symlink "${PROFILE}" "${PSScriptRoot}\powershell\Microsoft.PowerShell_profile.ps1"
 
 Write-Host "Attempting to Replace Windows Terminal settings"
-$StorePackages = "${HOME}\AppData\Local\Packages\*Microsoft.WindowsTerminal*"
-$WindowsTerminalDir = Get-ChildItem $StorePackages
+$StorePackages = "${HOME}\AppData\Local\Packaaaages\*Microsoft.WindowsTerminal*"
+$WindowsTerminalDir = Get-ChildItem $StorePackages -ErrorAction SilentlyContinue
 if ($WindowsTerminalDir) {
     Write-Host "Found WindowsTerminal on ${WindowsTerminalDir}, creating symlink"
     Add-Symlink "${WindowsTerminalDir}\LocalState\settings.json" "${PSScriptRoot}\terminal\settings.json"
+}
+
+Write-Host "Attempting to Replace VSCode settings"
+$VSCodeDir = "${HOME}\AppData\Roaming\Code"
+if (Get-ChildItem $VSCodeDir -ErrorAction SilentlyContinue) {
+    Write-Host "Found VSCode on User's AppData, creating symlink"
+    Add-Symlink "${VSCodeDir}\User\settings.json" "${PSScriptRoot}\vscode\settings.json"
 }
 
 Write-Host "If this is a really fresh install run install_softwares.ps1 to get going" -ForegroundColor Yellow
