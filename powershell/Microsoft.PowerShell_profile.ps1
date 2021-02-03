@@ -130,22 +130,6 @@ catch {
     Write-Error "Unable to Import-Module oh-my-posh, it wasn't found"
 }
 
-
-# Environment Checks
-
-# Warns user if the PROJ_DIR environment variable isn't set
-# if its there it also attempts to check if it exists and creates a new directory if possible
-if (!($env:PROJ_DIR)) {
-    Write-Warning "Project Directory (PROJ_DIR) isn't set, some functions might fail"
-    try {
-        Get-Item $env:PROJ_DIR -ErrorAction Stop
-    }
-    catch {
-        Write-Warning "Project Directory is set but doesn't exist"
-    }
-}
-
-
 # Setup Autocomplete for some commands
 
 # src: https://docs.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
@@ -167,6 +151,34 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
+}
+
+# Environment Checks
+
+# Warns user if the PROJ_DIR environment variable isn't set
+# if its there it also attempts to check if it exists and creates a new directory if possible
+if (!($env:PROJ_DIR)) {
+    Write-Warning "Project Directory (PROJ_DIR) isn't set, some functions might fail"
+    try {
+        Get-Item $env:PROJ_DIR -ErrorAction Stop
+    }
+    catch {
+        Write-Warning "Project Directory is set but doesn't exist"
+    }
+}
+
+try {
+    Get-Command git -ErrorAction Stop > $null
+}
+catch {
+    Write-Warning "Git isn't available"
+}
+
+try {
+    Get-Command code -ErrorAction Stop > $null
+}
+catch {
+    Write-Warning "VSCode isn't available"
 }
 
 # Attempting to load extras
