@@ -28,6 +28,8 @@ if ($Answer -ne "JENKINS") {
 
 Write-Host "Replacing .gitconfig"
 Add-Symlink "${HOME}\.gitconfig" "${PSScriptRoot}\.gitconfig"
+Write-Host "Replacing .gitignore"
+Add-Symlink "${HOME}\.gitignore" "${PSScriptRoot}\.gitignore"
 
 Write-Host "Replacing Powershell Profile"
 Add-Symlink "${PROFILE}" "${PSScriptRoot}\powershell\Microsoft.PowerShell_profile.ps1"

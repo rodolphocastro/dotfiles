@@ -1,3 +1,9 @@
 [user]
 	name = Rodolpho Alves
 	email = rodolpho.castro.a@gmail.com
+[core]
+	autocrlf = true
+[pull]
+	rebase = true
+[fetch]
+	prune = true
