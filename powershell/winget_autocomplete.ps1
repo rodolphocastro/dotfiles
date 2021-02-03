@@ -1,4 +1,4 @@
-# src: 
+# src: https://github.com/microsoft/winget-cli/blob/master/doc/Completion.md
 # Registers AutoCompletion for WinGet
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
