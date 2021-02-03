@@ -167,6 +167,7 @@ if (!($env:PROJ_DIR)) {
     }
 }
 
+# Checks if git is available
 try {
     Get-Command git -ErrorAction Stop > $null
 }
@@ -174,11 +175,20 @@ catch {
     Write-Warning "Git isn't available"
 }
 
+# Checks if code is available
 try {
     Get-Command code -ErrorAction Stop > $null
 }
 catch {
     Write-Warning "VSCode isn't available"
+}
+
+# Checks if CaskaydiaCove NF is available
+try {
+    Get-Item "${env:windir}\Fonts\Caskaydia Cove*" > $null
+}
+catch {
+    Write-Warning "CaskaydiaCove NerdFont isn't available"
 }
 
 # Attempting to load extras
