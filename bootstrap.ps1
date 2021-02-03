@@ -17,8 +17,8 @@ function Add-Symlink {
     New-Item -ItemType SymbolicLink -Path $from -Target $to -Force
 }
 
-Write-Host "This script will override some of your home files"
-Write-Host "If you are okay with that complete the sentence below, ALL CAPS please..." -ForegroundColor Red
+Write-Warning "This script will override some of your home files"
+Write-Warning "If you are okay with that complete the sentence below, ALL CAPS please..."
 $Answer = Read-Host -Prompt "LEEEEEEROOOY"
 
 if ($Answer -ne "JENKINS") {
@@ -26,29 +26,34 @@ if ($Answer -ne "JENKINS") {
     return -1;
 }
 
-Write-Host "Replacing .gitconfig"
-Add-Symlink "${HOME}\.gitconfig" "${PSScriptRoot}\.gitconfig"
-Write-Host "Replacing .gitignore"
-Add-Symlink "${HOME}\.gitignore" "${PSScriptRoot}\.gitignore"
+Write-Output "Replacing .gitconfig"
+Add-Symlink "${HOME}\.gitconfig" "${PSScriptRoot}\.gitconfig" > $null
+Write-Output "Replacing .gitignore"
+Add-Symlink "${HOME}\.gitignore" "${PSScriptRoot}\.gitignore" > $null
 
-Write-Host "Replacing Powershell Profile"
-Add-Symlink "${PROFILE}" "${PSScriptRoot}\powershell\Microsoft.PowerShell_profile.ps1"
+Write-Output "Replacing Powershell Profile"
+Add-Symlink "${PROFILE}" "${PSScriptRoot}\powershell\Microsoft.PowerShell_profile.ps1" > $null
 
-Write-Host "Attempting to Replace Windows Terminal settings"
+Write-Output "Attempting to Replace Windows Terminal settings"
 $StorePackages = "${HOME}\AppData\Local\Packaaaages\*Microsoft.WindowsTerminal*"
 $WindowsTerminalDir = Get-ChildItem $StorePackages -ErrorAction SilentlyContinue
 if ($WindowsTerminalDir) {
-    Write-Host "Found WindowsTerminal on ${WindowsTerminalDir}, creating symlink"
-    Add-Symlink "${WindowsTerminalDir}\LocalState\settings.json" "${PSScriptRoot}\terminal\settings.json"
+    Write-Output "Found WindowsTerminal on ${WindowsTerminalDir}, creating symlink"
+    Add-Symlink "${WindowsTerminalDir}\LocalState\settings.json" "${PSScriptRoot}\terminal\settings.json" > $null
 }
 
-Write-Host "Attempting to Replace VSCode settings"
+Write-Output "Attempting to Replace VSCode settings"
 $VSCodeDir = "${HOME}\AppData\Roaming\Code"
 if (Get-ChildItem $VSCodeDir -ErrorAction SilentlyContinue) {
-    Write-Host "Found VSCode on User's AppData, creating symlink"
-    Add-Symlink "${VSCodeDir}\User\settings.json" "${PSScriptRoot}\vscode\settings.json"
+    Write-Output "Found VSCode on User's AppData, creating symlink"
+    Add-Symlink "${VSCodeDir}\User\settings.json" "${PSScriptRoot}\vscode\settings.json"  > $null
+    Add-Symlink "${VSCodeDir}\User\keybindings.json" "${PSScriptRoot}\vscode\keybindings.json"  > $null
+    # Clear snippets before attempting to link
+    Get-Item "${VSCodeDir}\User\snippets\" -ErrorAction SilentlyContinue |
+        Remove-Item -Force -Recurse
+    Add-Symlink "${VSCodeDir}\User\snippets\" "${PSScriptRoot}\vscode\snippets\" > $null
 }
 
-Write-Host "If this is a really fresh install run install_softwares.ps1 to get going" -ForegroundColor Yellow
-Write-Host "If you see Powershell Profile errors you'll want to run ./powershell/setup/install_pwsh_modules.ps1 as well" -ForegroundColor Yellow
-Write-Host "Done!" -ForegroundColor Green
+Write-Warning "If you see Powershell Profile errors you'll want to run ./powershell/setup/install_pwsh_modules.ps1 as well"
+Write-Output "If this is a really fresh install run install_softwares.ps1 to get going"
+Write-Output "Done!"
