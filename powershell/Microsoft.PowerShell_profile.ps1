@@ -36,7 +36,7 @@ Set-Alias -Name gfrebase -Value Git-Fetch-And-Rebase
 # Inicializando o Oh-My-Posh
 Import-Module posh-git
 Import-Module oh-my-posh
-Set-Theme Paradox
+Set-PoshPrompt Paradox
 
 # Verificando se o ambiente está devidamente configurado
 if(!$env:PROJ_DIR){
