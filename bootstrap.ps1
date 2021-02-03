@@ -22,7 +22,7 @@ Write-Warning "If you are okay with that complete the sentence below, ALL CAPS p
 $Answer = Read-Host -Prompt "LEEEEEEROOOY"
 
 if ($Answer -ne "JENKINS") {
-    Write-Host "At least you have chicken. I guess..."
+    Write-Host "At least you have chicken 🐔"
     return -1;
 }
 
@@ -56,4 +56,8 @@ if (Get-ChildItem $VSCodeDir -ErrorAction SilentlyContinue) {
 
 Write-Warning "If you see Powershell Profile errors you'll want to run ./powershell/setup/install_pwsh_modules.ps1 as well"
 Write-Output "If this is a really fresh install run install_softwares.ps1 to get going"
-Write-Output "Done!"
+Write-Output "Done, your profile will be reloaded"
+Write-Output "`n"
+
+# Reloads the Profile
+. $PROFILE
