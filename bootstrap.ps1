@@ -50,7 +50,7 @@ if (Get-ChildItem $VSCodeDir -ErrorAction SilentlyContinue) {
     Add-Symlink "${VSCodeDir}\User\keybindings.json" "${PSScriptRoot}\vscode\keybindings.json"  > $null
     # Clear snippets before attempting to link
     Get-Item "${VSCodeDir}\User\snippets\" -ErrorAction SilentlyContinue |
-        Remove-Item -Force -Recurse
+    Remove-Item -Force -Recurse
     Add-Symlink "${VSCodeDir}\User\snippets\" "${PSScriptRoot}\vscode\snippets\" > $null
 }
 
