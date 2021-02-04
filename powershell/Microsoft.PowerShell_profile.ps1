@@ -10,6 +10,7 @@ Set-Alias -Name "gfpull" -Value Invoke-Git-FetchAndPull
 Set-Alias -Name "gfrebase" -Value Invoke-Git-FetchAndRebase
 Set-Alias -Name "gpruneb" -Value Invoke-Git-PruneGoneBranches
 Set-Alias -Name "gcleanup" -Value Invoke-Git-Cleanup
+Set-Alias -Name "greset" -Value Invoke-GitResetClean
 Set-Alias -Name "gtp" -Value Push-Projects-Dir
 Set-Alias -Name "keygen" -Value New-SshKey
 
@@ -77,6 +78,17 @@ Function Invoke-Git-Cleanup() {
     git gc
 }
 
+<#
+.SYNOPSIS
+    Resets the working directory to the last commit, also drops untracked files
+.DESCRIPTION
+    Shortcut function to call upon git reset --hard and git clean
+#>
+function Invoke-GitResetClean {
+    Write-Warning "Resetting changes on the local directory"
+    git reset --hard
+    git clean -qfd
+}
 
 <#
 .SYNOPSIS
