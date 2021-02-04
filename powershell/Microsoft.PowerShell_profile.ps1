@@ -1,3 +1,6 @@
+# Grabbing run settings from env variables
+[bool]$RunEnvCheck = ($null -eq $env:PWSH_SKIP_ENV_CHECK)
+
 # All Shortcuts
 Set-Alias -Name "back" -Value Pop-Location
 Set-Alias -Name "touch" -Value New-Item
@@ -154,41 +157,42 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 }
 
 # Environment Checks
+if ($RunEnvCheck) {
+    # Warns user if the PROJ_DIR environment variable isn't set
+    # if its there it also attempts to check if it exists and creates a new directory if possible
+    if (!($env:PROJ_DIR)) {
+        Write-Warning "Project Directory (PROJ_DIR) isn't set, some functions might fail"
+        try {
+            Get-Item $env:PROJ_DIR -ErrorAction Stop
+        }
+        catch {
+            Write-Warning "Project Directory is set but doesn't exist"
+        }
+    }
 
-# Warns user if the PROJ_DIR environment variable isn't set
-# if its there it also attempts to check if it exists and creates a new directory if possible
-if (!($env:PROJ_DIR)) {
-    Write-Warning "Project Directory (PROJ_DIR) isn't set, some functions might fail"
+    # Checks if git is available
     try {
-        Get-Item $env:PROJ_DIR -ErrorAction Stop
+        Get-Command git -ErrorAction Stop > $null
     }
     catch {
-        Write-Warning "Project Directory is set but doesn't exist"
+        Write-Warning "Git isn't available"
     }
-}
 
-# Checks if git is available
-try {
-    Get-Command git -ErrorAction Stop > $null
-}
-catch {
-    Write-Warning "Git isn't available"
-}
+    # Checks if code is available
+    try {
+        Get-Command code -ErrorAction Stop > $null
+    }
+    catch {
+        Write-Warning "VSCode isn't available"
+    }
 
-# Checks if code is available
-try {
-    Get-Command code -ErrorAction Stop > $null
-}
-catch {
-    Write-Warning "VSCode isn't available"
-}
-
-# Checks if CaskaydiaCove NF is available
-try {
-    Get-Item "${env:windir}\Fonts\Caskaydia Cove*" > $null
-}
-catch {
-    Write-Warning "CaskaydiaCove NerdFont isn't available"
+    # Checks if CaskaydiaCove NF is available
+    try {
+        Get-Item "${env:windir}\Fonts\Caskaydia Cove*" > $null
+    }
+    catch {
+        Write-Warning "CaskaydiaCove NerdFont isn't available"
+    }
 }
 
 # Attempting to load extras
