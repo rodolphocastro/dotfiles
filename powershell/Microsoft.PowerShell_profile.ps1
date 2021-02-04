@@ -190,10 +190,29 @@ if ($RunEnvCheck) {
 
     # Checks if CaskaydiaCove NF is available
     try {
-        Get-Item "${env:windir}\Fonts\Caskaydia Cove*" > $null
+        Get-Item "${env:windir}\Fonts\Caskaydia Cove*" -ErrorAction Stop > $null
     }
     catch {
         Write-Warning "CaskaydiaCove NerdFont isn't available"
+    }
+
+    # Checks if there is a .ssh folder on ~
+    try {
+        Get-Item "${HOME}\.ssh" -ErrorAction Stop > $null
+    }
+    catch {
+        Write-Warning "There are no ssh keys available"
+    }
+
+    # Checks if SSH Agent is running and git is configured
+    try {
+        $sshAgentStatus = (Get-Service -Name "ssh-agent").Status
+        if ($sshAgentStatus -ne "Running") {
+            Write-Warning "ssh-agent isn't running, you should change its initialization"
+        }
+    }
+    catch {
+        Write-Warning "Unable to check on ssh-agent status"
     }
 }
 
