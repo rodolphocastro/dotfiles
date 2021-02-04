@@ -1,5 +1,6 @@
 # Grabbing run settings from env variables
 [bool]$RunEnvCheck = ($null -eq $env:PWSH_SKIP_ENV_CHECK)
+[bool]$EnableAutoComplete = ($null -eq $env:PWSH_SKIP_AUTOCOMPLETE)
 
 # All Shortcuts
 Set-Alias -Name "back" -Value Pop-Location
@@ -134,25 +135,26 @@ catch {
 }
 
 # Setup Autocomplete for some commands
-
-# src: https://docs.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
-# PowerShell parameter completion shim for the dotnet CLI
-Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
-    param($commandName, $wordToComplete, $cursorPosition)
-    dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+if ($EnableAutoComplete) {
+    # src: https://docs.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
+    # PowerShell parameter completion shim for the dotnet CLI
+    Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+        param($commandName, $wordToComplete, $cursorPosition)
+        dotnet complete --position $cursorPosition "$wordToComplete" | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
     }
-}
 
-# src: https://github.com/microsoft/winget-cli/blob/master/doc/Completion.md
-# Registers AutoCompletion for WinGet
-Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
-    [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
-    $Local:word = $wordToComplete.Replace('"', '""')
-    $Local:ast = $commandAst.ToString().Replace('"', '""')
-    winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    # src: https://github.com/microsoft/winget-cli/blob/master/doc/Completion.md
+    # Registers AutoCompletion for WinGet
+    Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+        param($wordToComplete, $commandAst, $cursorPosition)
+        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
     }
 }
 
