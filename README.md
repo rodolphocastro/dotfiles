@@ -1,5 +1,9 @@
 # Rodolpho Alves' dotFiles
 
+Those are my personal settings for my Windows' environments.
+
+*If you want to use this consider forking it and changing it to your fit your own needs*, don't go around blindly running scripts from the internet!
+
 ## What are dotfiles
 
 In a nutshell:
