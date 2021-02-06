@@ -1,6 +1,7 @@
 # Grabbing run settings from env variables
 [bool]$RunEnvCheck = ($null -eq $env:PWSH_SKIP_ENV_CHECK)
 [bool]$EnableAutoComplete = ($null -eq $env:PWSH_SKIP_AUTOCOMPLETE)
+[string]$GitSshConfig = $env:GIT_SSH ?? ""
 
 # All Shortcuts
 Set-Alias -Name "back" -Value Pop-Location
@@ -221,6 +222,9 @@ if ($RunEnvCheck) {
         $sshAgentStatus = (Get-Service -Name "ssh-agent").Status
         if ($sshAgentStatus -ne "Running") {
             Write-Warning "ssh-agent isn't running, you should change its initialization"
+        }
+        if ($null -eq $GitSshConfig) {
+            Write-Warning "GIT_SSH isn't set, it might not use windows' OpenSSH"
         }
     }
     catch {
