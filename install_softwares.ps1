@@ -8,7 +8,7 @@ function Test-CommandExists {
         [Parameter(Mandatory)]
         [string]$testCommand
     )
-    
+
     try {
         Get-Command $testCommand -ErrorAction Stop
         return $true
@@ -29,6 +29,8 @@ if (!(Test-CommandExists winget)) {
 &winget search -e --id Microsoft.PowerShell
 
 &winget search -e --id Git.Git
+
+&winget search -e --id ditto.ditto
 
 &winget search -e --id Microsoft.WindowsTerminal
 
