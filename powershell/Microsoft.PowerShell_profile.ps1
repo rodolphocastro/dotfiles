@@ -2,6 +2,7 @@
 [bool]$RunEnvCheck = ($null -eq $env:PWSH_SKIP_ENV_CHECK)
 [bool]$EnableAutoComplete = ($null -eq $env:PWSH_SKIP_AUTOCOMPLETE)
 [string]$GitSshConfig = $env:GIT_SSH ?? ""
+[string]$DotFilesSrc = $env:DOTFILES_DIR ?? ($null -ne $env:PROJ_DIR ? "${env:PROJ_DIR}\dotfiles" : "")
 
 # All Shortcuts
 Set-Alias -Name "back" -Value Pop-Location
@@ -14,6 +15,8 @@ Set-Alias -Name "gcleanup" -Value Invoke-Git-Cleanup
 Set-Alias -Name "greset" -Value Invoke-GitResetClean
 Set-Alias -Name "gtp" -Value Push-Projects-Dir
 Set-Alias -Name "keygen" -Value New-SshKey
+Set-Alias -Name "code-export" -Value Export-VSCodeExtensionsToTxt
+Set-Alias -Name "code-import" -Value Import-VSCodeExtensionsFromTxt
 
 <#
 .SYNOPSIS
@@ -120,6 +123,60 @@ function New-SshKey {
         [String] $Comment
     )
     ssh-keygen -o -a 100 -t ed25519 -C $Comment
+}
+
+<#
+.SYNOPSIS
+    Exports VSCode extensions to the dotfiles directory
+.DESCRIPTION
+    Stores the VSCode extensions on a .txt on the current dotfiles directory, so it can be restored later
+.PARAMETER Target
+    Current dotfiles directory, defaults to either the env's DOTFILES_DIR or a composition of PROJ_DIR + dotfiles
+#>
+function Export-VSCodeExtensionsToTxt {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        # Directory to store the extensions.txt file
+        $Target = $DotFilesSrc
+    )
+
+    try {
+        &code --list-extensions |
+            Out-File "${Target}\vscode\extensions.txt"
+    }
+    catch {
+        Write-Warning "Unable to recover VSCode's extensions, is it installed?"
+    }
+}
+
+<#
+.SYNOPSIS
+    Installs VSCode extensions for the dotfiles directory
+.DESCRIPTION
+    Restores the VSCode extensions from the .txt on the current dotfiles directory
+.PARAMETER Source
+    Current dotfiles directory, defaults to either the env's DOTFILES_DIR or a composition of PROJ_DIR + dotfiles
+#>
+function Import-VSCodeExtensionsFromTxt {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        # Directory containing extensions.txt file
+        $Source = $DotFilesSrc
+    )
+
+    try {
+        Get-Content "${Source}\vscode\extensions.txt" |
+            ForEach-Object -Process {
+                &code --install-extension $_ --force
+            }
+    }
+    catch {
+        Write-Warning "Unable to restore VSCode's extensions, is it installed?"
+    }
 }
 
 # Attempt to load PSReadLine
