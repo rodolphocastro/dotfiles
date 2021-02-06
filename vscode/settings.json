@@ -58,5 +58,6 @@
   },
   "rest-client.previewResponsePanelTakeFocus": false,
   "rest-client.previewOption": "exchange",
-  "rest-client.previewResponseInUntitledDocument": true
+  "rest-client.previewResponseInUntitledDocument": true,
+  "workbench.colorTheme": "SynthWave '84"
 }
