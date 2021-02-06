@@ -35,7 +35,7 @@ Write-Output "Replacing Powershell Profile"
 Add-Symlink "${PROFILE}" "${PSScriptRoot}\powershell\Microsoft.PowerShell_profile.ps1" > $null
 
 Write-Output "Attempting to Replace Windows Terminal settings"
-$StorePackages = "${HOME}\AppData\Local\Packaaaages\*Microsoft.WindowsTerminal*"
+$StorePackages = "${HOME}\AppData\Local\Packages\*Microsoft.WindowsTerminal*"
 $WindowsTerminalDir = Get-ChildItem $StorePackages -ErrorAction SilentlyContinue
 if ($WindowsTerminalDir) {
     Write-Output "Found WindowsTerminal on ${WindowsTerminalDir}, creating symlink"
