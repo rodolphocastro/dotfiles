@@ -17,6 +17,8 @@ Set-Alias -Name "gtp" -Value Push-Projects-Dir
 Set-Alias -Name "keygen" -Value New-SshKey
 Set-Alias -Name "code-export" -Value Export-VSCodeExtensionsToTxt
 Set-Alias -Name "code-import" -Value Import-VSCodeExtensionsFromTxt
+Set-Alias -Name "dupdate" -Value Update-DotFiles
+Set-Alias -Name "gtd" -Value Push-DotfilesDir
 
 <#
 .SYNOPSIS
@@ -144,7 +146,7 @@ function Export-VSCodeExtensionsToTxt {
 
     try {
         &code --list-extensions |
-            Out-File "${Target}\vscode\extensions.txt"
+        Out-File "${Target}\vscode\extensions.txt"
     }
     catch {
         Write-Warning "Unable to recover VSCode's extensions, is it installed?"
@@ -170,13 +172,48 @@ function Import-VSCodeExtensionsFromTxt {
 
     try {
         Get-Content "${Source}\vscode\extensions.txt" |
-            ForEach-Object -Process {
-                &code --install-extension $_ --force
-            }
+        ForEach-Object -Process {
+            &code --install-extension $_ --force
+        }
     }
     catch {
         Write-Warning "Unable to restore VSCode's extensions, is it installed?"
     }
+}
+
+<#
+.SYNOPSIS
+    Updates the current dotfiles settings
+.DESCRIPTION
+    Shortcut function to update the dotfiles for this computer thru git
+.PARAMETER Target
+    Directory with the current dotfiles, defaults to either the env's DOTFILES_DIR or a composition of PROJ_DIR + dotfiles
+#>
+function Update-DotFiles {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $Target = $DotFilesSrc
+    )
+
+    Push-Location $Target
+    Invoke-Git-FetchAndPull
+    Pop-Location
+}
+
+<#
+.SYNOPSIS
+    Navigates into the dotfiles' directory
+#>
+function Push-DotfilesDir {
+    if ($DotFilesSrc) {
+        Push-Location $DotFilesSrc
+        return;
+    }
+
+    Write-Warning "Unable to navigate, no dotfiles directory is set"
+    Write-Warning "Setup the env:DOTFILES_DIR or the env:PROJ_DIR variable with a valid directory"
 }
 
 # Attempt to load PSReadLine
@@ -286,6 +323,10 @@ if ($RunEnvCheck) {
     }
     catch {
         Write-Warning "Unable to check on ssh-agent status"
+    }
+
+    if (!$DotFilesSrc) {
+        Write-Warning "Unable to find where you're storing your dotfiles, either set a DOTFILES_DIR environment variable or create a dotfiles under your PROJ_DIR"
     }
 }
 
