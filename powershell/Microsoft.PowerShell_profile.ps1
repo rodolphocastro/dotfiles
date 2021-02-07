@@ -173,7 +173,7 @@ function Import-VSCodeExtensionsFromTxt {
     try {
         Get-Content "${Source}\vscode\extensions.txt" |
         ForEach-Object -Process {
-            &code --install-extension $_ --force
+            &code --install-extension $_
         }
     }
     catch {
