@@ -1,6 +1,5 @@
 aaron-bond.better-comments
 ardenivanov.svelte-intellisense
-ashinzekene.nestjs
 bradlc.vscode-tailwindcss
 cake-build.cake-vscode
 christian-kohler.npm-intellisense
@@ -19,13 +18,11 @@ formulahendry.auto-close-tag
 formulahendry.auto-rename-tag
 golang.go
 humao.rest-client
-Ionide.Ionide-fsharp
 mechatroner.rainbow-csv
 mikestead.dotenv
 ms-azuretools.vscode-azurestorage
 ms-azuretools.vscode-docker
 ms-dotnettools.csharp
-ms-python.python
 ms-toolsai.jupyter
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
@@ -38,7 +35,6 @@ ms-vsliveshare.vsliveshare
 msjsdiag.debugger-for-chrome
 msjsdiag.debugger-for-edge
 octref.vetur
-quicktype.quicktype
 redhat.vscode-yaml
 ritwickdey.LiveServer
 RobbOwen.synthwave-vscode
