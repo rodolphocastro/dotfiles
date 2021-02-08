@@ -6,6 +6,7 @@
 
 # All Shortcuts
 Set-Alias -Name "back" -Value Pop-Location
+Set-Alias -Name "push" -Value Push-Location
 Set-Alias -Name "touch" -Value New-Item
 Set-Alias -Name "open" -Value Invoke-Item
 Set-Alias -Name "gfpull" -Value Invoke-Git-FetchAndPull
