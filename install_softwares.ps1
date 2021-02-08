@@ -1,3 +1,6 @@
+$SoftwareListFile = ".\software_list.txt"
+[string[]]$SoftwareList = Get-Content $SoftwareListFile
+
 <#
 .SYNOPSIS
     Checks if a Command is currently available on Powershell
@@ -24,16 +27,13 @@ if (!(Test-CommandExists winget)) {
     return -1
 }
 
-# TODO: Replace search with install
+Write-Output "This script will attempt to install multiple softwares on your system"
+$DoInstall = Read-Host -Prompt "Are you sure you want to install? If so, type 'install' bellow."
+$WingetCommandParam = ($DoInstall -eq "install") ? $DoInstall : "search";
 
-&winget search -e --id Microsoft.PowerShell
+$SoftwareList
+    | ForEach-Object -Process {
+        &winget $WingetCommandParam -e --id $_
+    }
 
-&winget search -e --id Git.Git
-
-&winget search -e --id ditto.ditto
-
-&winget search -e --id Microsoft.WindowsTerminal
-
-&winget search -e --id Microsoft.VisualStudioCode-User-x64
-
-&winget search -e --id Microsoft.dotnet
+Write-Output "Done!"

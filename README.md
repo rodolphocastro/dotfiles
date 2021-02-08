@@ -27,7 +27,6 @@ If you're interested in the subject you might want to check out some articles su
 
 > **Do not use this if you have no idea what these scripts are doing**. Never run scripts blindly, especially those found on the internet.
 
-
 ### Windows
 
 If you're on Windows:
@@ -52,7 +51,7 @@ Usually this means you'll create an `extras.ps1` file on `${HOME}\Documents\Powe
 
 The `bootstrap` script doesn't install anything for you. If you're interested in install stuff you'll need to run the following scripts:
 
-1. `install_softwares.ps1`: Sets you up with a bunch of development tools
+1. `install_softwares.ps1`: Sets you up with a bunch of softwares based on the contents of `software_list.txt`
 2. `powershell/setup/install_pwsh_modules.ps1`: Sets you up with a bunch of Powershell Modules
 
 ### Linux

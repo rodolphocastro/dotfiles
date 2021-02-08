@@ -1,0 +1,12 @@
+7zip.7zip
+Mozilla.FirefoxDeveloperEdition
+Microsoft.VisualStudioCode-User-x64
+Git.Git
+Microsoft.PowerShell
+Microsoft.WindowsTerminal
+Microsoft.dotnet
+ditto.ditto
+ShareX.ShareX
+code52.Carnac
+Microsoft.PowerToys
+VideoLAN.VLC
