@@ -20,6 +20,7 @@ Set-Alias -Name "code-export" -Value Export-VSCodeExtensionsToTxt
 Set-Alias -Name "code-import" -Value Import-VSCodeExtensionsFromTxt
 Set-Alias -Name "dupdate" -Value Update-DotFiles
 Set-Alias -Name "gtd" -Value Push-DotfilesDir
+Set-Alias -Name "profile-edit" -Value Invoke-EditPwshProfile
 
 <#
 .SYNOPSIS
@@ -215,6 +216,14 @@ function Push-DotfilesDir {
 
     Write-Warning "Unable to navigate, no dotfiles directory is set"
     Write-Warning "Setup the env:DOTFILES_DIR or the env:PROJ_DIR variable with a valid directory"
+}
+
+<#
+.SYNOPSIS
+    Opens up the $PROFILE directory in VS Code.
+#>
+function Invoke-EditPwshProfile {
+    code (Get-Item $PROFILE).Directory    
 }
 
 # Attempt to load PSReadLine
