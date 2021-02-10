@@ -32,8 +32,16 @@ $DoInstall = Read-Host -Prompt "Are you sure you want to install? If so, type 'i
 $WingetCommandParam = ($DoInstall -eq "install") ? $DoInstall : "search";
 
 $SoftwareList
-    | ForEach-Object -Process {
-        &winget $WingetCommandParam -e --id $_
-    }
+| ForEach-Object -Process {
+    &winget $WingetCommandParam -e --id $_
+}
 
 Write-Output "Done!"
+if (!(Test-Path "${PSScriptRoot}\bootstrap.ps1" -PathType Leaf)) {
+    return;
+}
+
+$DoBootstrap = Read-Host -Prompt "Type 'bootstrap' bellow if you want to run dotfiles' bootstrap as well"
+if ($DoBootstrap -eq "bootstrap") {
+    . "${PSScriptRoot}\bootstrap.ps1"
+}
