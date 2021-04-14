@@ -1,4 +1,5 @@
 * text=auto
 
 # Shell files should always use LF
-*.sh text eol=lf
+*.sh        text eol=lf
+*.ps1       text eol=crlf
