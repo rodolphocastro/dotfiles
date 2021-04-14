@@ -10,15 +10,15 @@ fi
 
 # user's .gitconfig
 echo "Setting up .gitconfig"
-ln -f -s ./.gitconfig ~/.gitconfig
+ln -f ./.gitconfig ~/.gitconfig
 
 # user's .gitignore
 echo "Setting up .gitignore"
-ln -f -s ./.gitignore ~/.gitignore
+ln -f ./.gitignore ~/.gitignore
 
 # user's .bashrc
 echo "Setting up bashrc"
-ln -f -s ./.bashrc ~/.bashrc
+ln -f ./.bashrc ~/.bashrc
 
 # extra steps!
 echo "Bootstrap complete, if you see any bash errors remember that you might need to install extra dependencies"
