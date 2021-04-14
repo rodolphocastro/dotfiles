@@ -61,5 +61,8 @@
   "rest-client.previewOption": "exchange",
   "rest-client.previewResponseInUntitledDocument": true,
   "workbench.colorTheme": "SynthWave '84",
-  "vsicons.dontShowNewVersionMessage": true
+  "vsicons.dontShowNewVersionMessage": true,
+  "[shellscript]": {
+    "files.eol": "\n"
+  }
 }

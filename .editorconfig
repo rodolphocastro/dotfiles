@@ -12,3 +12,8 @@ indent_size = 4
 
 [*.{json, md}]
 indent_size = 2
+
+[*.sh]
+indent_size = 4
+indent_style = space
+end_of_line = lf
