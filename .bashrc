@@ -116,6 +116,9 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# Start ssh-agent
+eval $(ssh-agent)
+
 # Enables Deno on the shell
 export DENO_INSTALL="/home/ardc/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
