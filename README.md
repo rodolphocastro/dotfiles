@@ -54,9 +54,9 @@ The `bootstrap` script doesn't install anything for you. If you're interested in
 1. `install_softwares.ps1`: Sets you up with a bunch of softwares based on the contents of `software_list.txt`
 2. `powershell/setup/install_pwsh_modules.ps1`: Sets you up with a bunch of Powershell Modules
 
-### Linux
+### Linux (WSL)
 
-> WIP, eventually I'll add my WSL goodies here
+Run `bootstrap.sh` and you'll have the usual files (git and bashrc) sys-linked and ready to rock.
 
 ## Directory structure
 
@@ -65,6 +65,7 @@ This is the directory structure I'll be keeping for my `dotfiles`:
 | Directory      | What goes into it                |
 | -------------- | -------------------------------- |
 | `.`            | Everything that goes to `~`      |
+| `./bash`       | Bash profiles and Snippets       |
 | `./powershell` | Powershell Profiles and Snippets |
 | `./terminal`   | Everything Windows Terminal      |
 | `./vscode`     | VisualStudio Code goodies        |

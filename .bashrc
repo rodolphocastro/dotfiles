@@ -122,3 +122,21 @@ eval $(ssh-agent)
 # Enables Deno on the shell
 export DENO_INSTALL="/home/ardc/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Sets PROJ_DIR environment variable
+export PROJ_DIR="/home/ardc/projects"
+
+# Sets DOTFILES_DIR environment variable
+export DOTFILES_DIR="/home/ardc/projects/dotfiles"
+
+# Setting up navigation aliases
+alias gtp="cd $PROJ_DIR"
+alias push="pushd"
+alias back="popd"
+alias gtd="cd $DOTFILES_DIR"
+
+# Setting up QoL aliases
+alias profile-edit="code ~/.bashrc"
+
+# Setting up git aliases
+alias gfpull=""
