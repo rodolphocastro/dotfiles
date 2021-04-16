@@ -120,7 +120,7 @@ fi
 eval $(ssh-agent)
 
 # Enables Deno on the shell
-export DENO_INSTALL="/home/ardc/.deno"
+export DENO_INSTALL="~/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Sets PROJ_DIR environment variable
