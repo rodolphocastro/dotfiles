@@ -139,4 +139,5 @@ alias gtd="pushd $DOTFILES_DIR"
 alias profile-edit="code ~/.bashrc"
 
 # Setting up git aliases
-alias gfpull=""
+alias gfpull="git fetch --all; git pull"
+alias gfrebase="git fetch --all; git rebase -i"
