@@ -1,3 +1,5 @@
+#!/bin/bash
+
 winUserPath=$(wslpath "$(wslvar USERPROFILE)")
 
 cp -r $winUserPath/.ssh ~
