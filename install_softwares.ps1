@@ -31,6 +31,9 @@ Write-Output "This script will attempt to install multiple softwares on your sys
 $DoInstall = Read-Host -Prompt "Are you sure you want to install? If so, type 'install' bellow."
 $WingetCommandParam = ($DoInstall -eq "install") ? $DoInstall : "search";
 
+# First: Ensure we have WSL installed
+&wsl --install
+
 $SoftwareList
 | ForEach-Object -Process {
     &winget $WingetCommandParam -e --id $_
