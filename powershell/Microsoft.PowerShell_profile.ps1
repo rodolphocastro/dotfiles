@@ -21,7 +21,7 @@ Set-Alias -Name "code-import" -Value Import-VSCodeExtensionsFromTxt
 Set-Alias -Name "dupdate" -Value Update-DotFiles
 Set-Alias -Name "gtd" -Value Push-DotfilesDir
 Set-Alias -Name "profile-edit" -Value Invoke-EditPwshProfile
-
+Set-Alias -Name "g" -Value git
 <#
 .SYNOPSIS
     Calls fetches and pulls updates from the upstream branch. Stashes and Pops if there are uncomitted changes
@@ -226,6 +226,42 @@ function Invoke-EditPwshProfile {
     code (Get-Item $PROFILE).Directory    
 }
 
+<#
+.SYNOPSIS
+    Install the recommended modules for powershell.
+#>
+function Install-PowershellRecommendedModules {
+    $galleryStatus = Get-PSRepository -Name "PSGallery"
+    if ($galleryStatus.InstallationPollicy -ne "Trusted") {
+        Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+    }
+
+    Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
+    # https://github.com/dahlbyk/posh-git
+    Install-Module posh-git -Scope CurrentUser -AllowClobber -Force
+    # https://github.com/JanDeDobbeleer/oh-my-posh
+    Install-Module oh-my-posh -Scope CurrentUser -AllowClobber -Force
+
+    Write-Host "Remember to install a font such as Caskaydia Cove NF from https://www.nerdfonts.com/font-downloads" -ForegroundColor Yellow
+}
+
+<#
+.SYNOPSIS
+    Updates the recommended modules for powershell.
+#>
+function Update-PowershellRecommendedModules {
+    $galleryStatus = Get-PSRepository -Name "PSGallery"
+    if ($galleryStatus.InstallationPollicy -ne "Trusted") {
+        Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+    }
+
+    Update-Module -Name PSReadLine -AllowPrerelease
+    # https://github.com/dahlbyk/posh-git
+    Update-Module posh-git
+    # https://github.com/JanDeDobbeleer/oh-my-posh
+    Update-Module oh-my-posh
+}
+
 # Attempt to load PSReadLine
 try {
     Import-Module PSReadLine
@@ -245,7 +281,8 @@ catch {
 # Attempt to load oh-my-posh
 try {
     Import-Module oh-my-posh
-    Set-PoshPrompt Paradox
+    $env:POSH_GIT_ENABLED = $true
+    Set-PoshPrompt Slimfat
 }
 catch {
     Write-Error "Unable to Import-Module oh-my-posh, it wasn't found"
