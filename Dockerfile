@@ -10,7 +10,7 @@ RUN Invoke-ScriptAnalyzer .
 WORKDIR /src/powershell
 RUN Invoke-ScriptAnalyzer .
 
-FROM mcr.microsoft.com/powershell AS base
+FROM mcr.microsoft.com/powershell AS basePwsh
 WORKDIR /src
 COPY [".", "."]
 RUN bash -n ./.bashrc
