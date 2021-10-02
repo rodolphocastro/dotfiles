@@ -27,7 +27,6 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # Start ssh-agent with keychain
-eval `ssh-agent -s`
 eval $(keychain --eval id_ed25519)
 
 # Enables Deno on the shell
@@ -37,10 +36,10 @@ if [ -d "$DENO_INSTALL/bin" ] ; then
 fi
 
 # Sets PROJ_DIR environment variable
-export PROJ_DIR="~/projects"
+export PROJ_DIR="$HOME/projects/"
 
 # Sets DOTFILES_DIR environment variable
-export DOTFILES_DIR="~/projects/dotfiles"
+export DOTFILES_DIR="$HOME/projects/dotfiles"
 
 # Setting up navigation aliases
 alias gtp="pushd $PROJ_DIR"
