@@ -115,30 +115,3 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
-
-# Start ssh-agent with keychain
-eval `ssh-agent -s`
-eval $(keychain --eval id_ed25519)
-
-# Enables Deno on the shell
-export DENO_INSTALL="~/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# Sets PROJ_DIR environment variable
-export PROJ_DIR="~/projects"
-
-# Sets DOTFILES_DIR environment variable
-export DOTFILES_DIR="~/projects/dotfiles"
-
-# Setting up navigation aliases
-alias gtp="pushd $PROJ_DIR"
-alias push="pushd"
-alias back="popd"
-alias gtd="pushd $DOTFILES_DIR"
-
-# Setting up QoL aliases
-alias profile-edit="code ~/.bashrc"
-
-# Setting up git aliases
-alias gfpull="git fetch --all; git pull"
-alias gfrebase="git fetch --all; git rebase -i"

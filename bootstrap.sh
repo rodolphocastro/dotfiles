@@ -20,6 +20,18 @@ ln -f ./.gitignore ~/.gitignore
 echo "Setting up bashrc"
 ln -f ./.bashrc ~/.bashrc
 
+# user's .profile
+echo "Setting up profile"
+ln -f ./.profile ~/.profile
+
+# user's .zshrc
+echo "Setting up zshrc"
+ln -f ./.zshrc ~/.zshrc
+
+# user's .zprofile
+echo "Setting up zprofile"
+ln -f ./.zprofile ~/.zprofile
+
 # extra steps!
 echo "Bootstrap complete, if you see any bash errors remember that you might need to install extra dependencies"
 echo "If this is within a WSL environment you might want to link up your SSH files and other goodies, use the script on bash/misc"
