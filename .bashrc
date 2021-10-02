@@ -116,8 +116,9 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Start ssh-agent
-eval $(ssh-agent)
+# Start ssh-agent with keychain
+eval `ssh-agent -s`
+eval $(keychain --eval id_ed25519)
 
 # Enables Deno on the shell
 export DENO_INSTALL="~/.deno"
