@@ -53,3 +53,4 @@ alias profile-edit="code ~/.profile"
 # Setting up git aliases
 alias gfpull="git fetch --all; git pull"
 alias gfrebase="git fetch --all; git rebase -i"
+alias gup="git push -u origin HEAD"
