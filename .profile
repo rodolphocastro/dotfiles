@@ -26,9 +26,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Start ssh-agent with keychain
-eval $(keychain --eval id_ed25519)
-
 # Enables Deno on the shell
 if [ -d "$DENO_INSTALL/bin" ] ; then
     export PATH="$DENO_INSTALL/bin:$PATH"
