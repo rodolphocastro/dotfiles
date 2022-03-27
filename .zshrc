@@ -101,5 +101,33 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Aliases
+# Sets PROJ_DIR environment variable
+export PROJ_DIR="$HOME/src/"
+
+# Sets DOTFILES_DIR environment variable
+export DOTFILES_DIR="$HOME/src/dotfiles"
+
+# Setting up navigation aliases
+alias gtp="pushd $PROJ_DIR"
+alias push="pushd"
+alias back="popd"
+alias gtd="pushd $DOTFILES_DIR"
+
+# Setting up QoL aliases
+alias profile-edit="code ~/.profile"
+
+# Setting up git aliases
+alias gfpull="git fetch --all; git pull"
+alias gfrebase="git fetch --all; git rebase -i"
+alias gup="git push -u origin HEAD"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export DENO_INSTALL="/home/ralves/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"
+
 plugins=(… zsh-completions)
 autoload -U compinit && compinit
