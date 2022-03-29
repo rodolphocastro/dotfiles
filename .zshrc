@@ -113,6 +113,8 @@ alias gtp="pushd $PROJ_DIR"
 alias push="pushd"
 alias back="popd"
 alias gtd="pushd $DOTFILES_DIR"
+alias start="xdg-open"
+alias open="xdg-open"
 
 # Setting up QoL aliases
 alias profile-edit="code ~/.profile"
