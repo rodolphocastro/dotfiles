@@ -2,7 +2,7 @@
 	name = Rodolpho Alves
 	email = rodolpho.castro.a@gmail.com
 [core]
-	autocrlf = true
+	editor = vim
 [pull]
 	rebase = true
 [fetch]
