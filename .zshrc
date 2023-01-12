@@ -71,7 +71,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent minikube kubectl git-auto-fetch) 
+plugins=(git ssh-agent minikube kubectl git-auto-fetch)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -139,4 +139,17 @@ plugins=(… zsh-syntax-highlighting)
 plugins=(… zsh-autosuggestions)
 # git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
 plugins=(… zsh-completions)
+# dotnet plugin
+plugins=(... dotnet)
+
+# dotnet autocompletion
+_dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  reply=( "${(ps:\n:)completions}" )
+}
+
+compctl -K _dotnet_zsh_complete dotnet
+
 autoload -U compinit && compinit
