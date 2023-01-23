@@ -32,6 +32,10 @@ ln -f ./.zshrc ~/.zshrc
 echo "Setting up zprofile"
 ln -f ./.zprofile ~/.zprofile
 
+# creating extraScripts folder
+echo "Creating the ~/.extraScripts folder for extensibility"
+mkdir ~/.extraScripts
+
 # extra steps!
 echo "Bootstrap complete, if you see any bash errors remember that you might need to install extra dependencies"
 echo "If this is within a WSL environment you might want to link up your SSH files and other goodies, use the script on bash/misc"
