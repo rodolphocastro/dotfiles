@@ -64,5 +64,6 @@
   "vsicons.dontShowNewVersionMessage": true,
   "[shellscript]": {
     "files.eol": "\n"
-  }
+  },
+  "git.autofetch": true
 }
