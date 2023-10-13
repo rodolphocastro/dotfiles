@@ -42,18 +42,6 @@ if ($WindowsTerminalDir) {
     Add-Symlink "${WindowsTerminalDir}\LocalState\settings.json" "${PSScriptRoot}\terminal\settings.json" > $null
 }
 
-Write-Output "Attempting to Replace VSCode settings"
-$VSCodeDir = "${HOME}\AppData\Roaming\Code"
-if (Get-ChildItem $VSCodeDir -ErrorAction SilentlyContinue) {
-    Write-Output "Found VSCode on User's AppData, creating symlink"
-    Add-Symlink "${VSCodeDir}\User\settings.json" "${PSScriptRoot}\vscode\settings.json"  > $null
-    Add-Symlink "${VSCodeDir}\User\keybindings.json" "${PSScriptRoot}\vscode\keybindings.json"  > $null
-    # Clear snippets before attempting to link
-    Get-Item "${VSCodeDir}\User\snippets\" -ErrorAction SilentlyContinue |
-    Remove-Item -Force -Recurse
-    Add-Symlink "${VSCodeDir}\User\snippets\" "${PSScriptRoot}\vscode\snippets\" > $null
-}
-
 Write-Warning "If you see Powershell Profile errors you'll want to run ./powershell/setup/install_pwsh_modules.ps1 as well"
 Write-Output "If this is a really fresh install run install_softwares.ps1 to get going"
 Write-Output "Done, your profile will be reloaded"
