@@ -23,6 +23,7 @@ Set-Alias -Name "dupdate" -Value Update-DotFiles
 Set-Alias -Name "gtd" -Value Push-DotfilesDir
 Set-Alias -Name "profile-edit" -Value Invoke-EditPwshProfile
 Set-Alias -Name "g" -Value git
+
 <#
 .SYNOPSIS
     Calls fetches and pulls updates from the upstream branch. Stashes and Pops if there are uncomitted changes
@@ -142,60 +143,6 @@ function New-SshKey {
 
 <#
 .SYNOPSIS
-    Exports VSCode extensions to the dotfiles directory
-.DESCRIPTION
-    Stores the VSCode extensions on a .txt on the current dotfiles directory, so it can be restored later
-.PARAMETER Target
-    Current dotfiles directory, defaults to either the env's DOTFILES_DIR or a composition of PROJ_DIR + dotfiles
-#>
-function Export-VSCodeExtensionsToTxt {
-    [CmdletBinding()]
-    param (
-        [Parameter()]
-        [string]
-        # Directory to store the extensions.txt file
-        $Target = $DotFilesSrc
-    )
-
-    try {
-        &code --list-extensions |
-        Out-File "${Target}\vscode\extensions.txt"
-    }
-    catch {
-        Write-Warning "Unable to recover VSCode's extensions, is it installed?"
-    }
-}
-
-<#
-.SYNOPSIS
-    Installs VSCode extensions for the dotfiles directory
-.DESCRIPTION
-    Restores the VSCode extensions from the .txt on the current dotfiles directory
-.PARAMETER Source
-    Current dotfiles directory, defaults to either the env's DOTFILES_DIR or a composition of PROJ_DIR + dotfiles
-#>
-function Import-VSCodeExtensionsFromTxt {
-    [CmdletBinding()]
-    param (
-        [Parameter()]
-        [string]
-        # Directory containing extensions.txt file
-        $Source = $DotFilesSrc
-    )
-
-    try {
-        Get-Content "${Source}\vscode\extensions.txt" |
-        ForEach-Object -Process {
-            &code --install-extension $_
-        }
-    }
-    catch {
-        Write-Warning "Unable to restore VSCode's extensions, is it installed?"
-    }
-}
-
-<#
-.SYNOPSIS
     Updates the current dotfiles settings
 .DESCRIPTION
     Shortcut function to update the dotfiles for this computer thru git
@@ -247,11 +194,12 @@ function Install-PowershellRecommendedModules {
         Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
     }
 
-    Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
     # https://github.com/dahlbyk/posh-git
     Install-Module posh-git -Scope CurrentUser -AllowClobber -Force
     # https://github.com/JanDeDobbeleer/oh-my-posh
     Install-Module oh-my-posh -Scope CurrentUser -AllowClobber -Force
+    # terminal icons
+    Install-Module -Name Terminal-Icons -Repository PSGallery
 
     Write-Host "Remember to install a font such as Caskaydia Cove NF from https://www.nerdfonts.com/font-downloads" -ForegroundColor Yellow
 }
@@ -266,37 +214,29 @@ function Update-PowershellRecommendedModules {
         Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
     }
 
-    Update-Module -Name PSReadLine -AllowPrerelease
     # https://github.com/dahlbyk/posh-git
     Update-Module posh-git
     # https://github.com/JanDeDobbeleer/oh-my-posh
     Update-Module oh-my-posh
-}
-
-# Attempt to load PSReadLine
-try {
-    Import-Module PSReadLine
-}
-catch {
-    Write-Error "Unable to Import-Module PSReadLine, it wasn't found"
-}
-
-# Attempt to load posh-git
-try {
-    Import-Module posh-git
-}
-catch {
-    Write-Error "Unable to Import-Module posh-git, it wasn't found"
+    # terminal icons
+    Update-Module Terminal-Icons
 }
 
 # Attempt to load oh-my-posh
 try {
-    Import-Module oh-my-posh
+    oh-my-posh init pwsh | Invoke-Expression
     $env:POSH_GIT_ENABLED = $true
-    Set-PoshPrompt Slimfat
 }
 catch {
     Write-Error "Unable to Import-Module oh-my-posh, it wasn't found"
+}
+
+# Attempt to load
+try {
+    Import-Module -Name Terminal-Icons
+}
+catch {
+    Write-Error "Unable to Import-Module Terminal-Icons, it wasn't found"
 }
 
 # Setup Autocomplete for some commands
